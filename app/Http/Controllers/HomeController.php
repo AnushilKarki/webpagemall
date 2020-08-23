@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use TCG\Voyager\Models\Category;
 class HomeController extends Controller
 {
     /**
@@ -21,9 +22,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function contact()
+    {
+        return view('contact');
+    }
     public function index()
     {
         $products=Product::take(20)->get();
-        return view('home',['products'=>$products]);
+$categories=Category::whereNull('parent_id')->get();
+
+        return view('home',['products'=>$products,'categories'=>$categories]);
     }
 }
